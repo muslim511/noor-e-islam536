@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>ASHRAFI HOSTING</title>
+<style>
+:root{--bg:#0b1220;--panel:#111c2e;--line:#26364d;--muted:#9aabc2;--text:#edf4ff;--mint:#6ee7b7;--purple:#a78bfa;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#101a2b,#080d16 70%);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);min-height:100vh}
+.wrap{max-width:760px;margin:auto;padding:16px}.header{display:flex;align-items:center;gap:12px;padding:16px;background:#101827;border:1px solid var(--line);border-radius:20px}
+.logo{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:#25344d;font-size:26px}.brand{font-weight:850;letter-spacing:.4px;font-size:18px}.sub{font-size:11px;color:var(--muted);letter-spacing:1.2px}.demo{margin-left:auto;background:#44351a;color:#fcd34d;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800}
+.hero{margin-top:14px;padding:18px;background:linear-gradient(130deg,#17263b,#101827);border:1px solid var(--line);border-radius:20px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.label{font-size:11px;color:var(--muted);letter-spacing:1px}.status{font-size:25px;font-weight:800;margin-top:3px}.online{color:var(--mint)}.offline{color:var(--red)}
+.btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}button,select,input{font:inherit}button{border:1px solid var(--line);border-radius:11px;padding:11px 9px;background:#1a2940;color:var(--text);font-weight:750;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.start{background:#145c48;border-color:#1c8065}.stop{background:#582b35;border-color:#80404a}
+.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.nav button{padding:12px 3px;font-size:12px;background:#111c2e}.nav button.active{background:#d1fae5;color:#065f46;border-color:#6ee7b7}
+.panel{background:#111c2e;border:1px solid var(--line);border-radius:18px;padding:17px;margin-top:12px}.panel h2{font-size:18px;margin:0 0 15px}.field{margin:13px 0}.field label{display:block;font-size:13px;color:#bdcbe0;margin-bottom:7px}input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #34465f;background:#0b1423;color:var(--text);outline:none}.choices{display:flex;gap:10px}.choice{flex:1;display:flex;align-items:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#0b1423;font-size:13px}.choice input{width:auto;accent-color:#6ee7b7}
+.note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:12px}.full{width:100%;margin-top:8px}.console{background:#070d15;border:1px solid #24354b;border-radius:12px;padding:13px;min-height:100px;max-height:230px;overflow:auto;font:12px/1.65 ui-monospace,monospace;color:#9af0ca;white-space:pre-wrap;overflow-wrap:anywhere}.commandrow{display:flex;gap:8px;margin-top:10px}.commandrow input{min-width:0}.commandrow button{white-space:nowrap}.footer{text-align:center;color:#71839c;font-size:11px;padding:18px 0}.hidden{display:none!important}
+@media(min-width:560px){.wrap{padding:24px}.hero,.panel{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <div class="logo">🎮</div>
+    <div><div class="brand">ASHRAFI HOSTING</div><div class="sub">MINECRAFT SERVER PANEL</div></div>
+    <span class="demo">DEMO MODE</span>
+  </header>
+  <section class="hero">
+    <div class="row">
+      <div><div class="label">SERVER STATUS</div><div id="status" class="status offline">Offline</div></div>
+      <div style="text-align:right"><div class="label">PLAYERS</div><div style="font-size:24px;font-weight:800">0 / 20</div></div>
+    </div>
+    <div class="btns">
+      <button class="start" id="start">▶ Start</button>
+      <button class="stop" id="stop" disabled>■ Stop</button>
+      <button id="restart">↻ Restart</button>
+    </div>
+    <div class="note">Ye buttons sirf demo status badalte hain. Abhi koi real Minecraft server connect nahi hai.</div>
+  </section>
+  <nav class="nav">
+    <button class="active" data-tab="dashboard">▦ Dashboard</button>
+    <button data-tab="console">⌨ Console</button>
+    <button data-tab="settings">⚙ Settings</button>
+    <button data-tab="players">♙ Players</button>
+  </nav>
+  <main>
+    <section class="panel" id="dashboard">
+      <h2>Create your server</h2>
+      <div class="field"><label for="serverName">Server name</label><input id="serverName" value="Ashrafi SMP" maxlength="40"></div>
+      <div class="field"><label>Minecraft edition</label><div class="choices">
+        <label class="choice"><input type="radio" name="edition" value="Java" checked> Java Edition</label>
+        <label class="choice"><input type="radio" name="edition" value="Bedrock"> Bedrock</label>
+      </div></div>
+      <div class="field"><label for="version">Server version (demo setting)</label><select id="version"><option>1.21.11</option><option>1.21.8</option><option>1.20.1</option><option>Latest / compatible</option></select></div>
+      <div class="field"><label for="ram">RAM allocation (demo setting)</label><select id="ram"><option>1 GB</option><option selected>2 GB</option><option>4 GB</option></select></div>
+      <button class="full start" id="save">Save configuration</button>
+      <div class="note" id="saveNote">Configuration sirf is demo page par hai; actual server files ya RAM allocate nahi hoti.</div>
+    </section>
+    <section class="panel hidden" id="console">
+      <h2>Server Console</h2>
+      <div class="console" id="logs">ASHRAFI HOSTING panel ready.
+Demo mode: real server connected nahi hai.</div>
+      <div class="commandrow"><input id="command" placeholder="help / list / say Hello" maxlength="120"><button id="run">Run demo</button></div>
+      <button class="full" id="clear">Clear console</button>
+      <div class="note">Commands sirf example ke taur par log honge, Minecraft server par execute nahi honge.</div>
+    </section>
+    <section class="panel hidden" id="settings">
+      <h2>Server Settings</h2>
+      <div class="row"><span class="label">SERVER NAME</span><strong id="sName">Ashrafi SMP</strong></div><hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <div class="row"><span class="label">EDITION</span><strong id="sEdition">Java</strong></div><hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <div class="row"><span class="label">VERSION</span><strong id="sVersion">1.21.11</strong></div><hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <div class="row"><span class="label">RAM SELECTION</span><strong id="sRam">2 GB</strong></div>
+      <div class="note">Ye preview settings hain. Real server ke liye hosting machine aur backend connect karna hoga.</div>
+    </section>
+    <section class="panel hidden" id="players">
+      <h2>Player Management</h2>
+      <div class="row"><div><strong>Online players</strong><div class="note">Demo player list</div></div><strong style="font-size:25px">0</strong></div>
+      <div class="note">Players ki asli list tab dikhegi jab Minecraft server connect hoga.</div>
+    </section>
+  </main>
+  <div class="footer">ASHRAFI HOSTING · PROTOTYPE V1 · JAVA + BEDROCK</div>
+</div>
+<script>
+(() => {
+  let online = false;
+  const $ = id => document.getElementById(id);
+  const logs = $('logs');
+  function log(line){ logs.textContent += '\\n' + line; logs.scrollTop = logs.scrollHeight; }
+  function renderStatus(){
+    $('status').textContent = online ? 'Online' : 'Offline';
+    $('status').className = 'status ' + (online ? 'online' : 'offline');
+    $('start').disabled = online;
+    $('stop').disabled = !online;
+  }
+  $('start').addEventListener('click', () => {online=true;renderStatus();log('Demo: server started (simulation).');});
+  $('stop').addEventListener('click', () => {online=false;renderStatus();log('Demo: server stopped (simulation).');});
+  $('restart').addEventListener('click', () => {online=false;renderStatus();log('Demo: restart simulated; status is Offline.');});
+  function updateSettings(){
+    const name = $('serverName').value.trim() || 'Unnamed';
+    const edition = document.querySelector('input[name="edition"]:checked').value;
+    $('sName').textContent = name;
+    $('sEdition').textContent = edition;
+    $('sVersion').textContent = $('version').value;
+    $('sRam').textContent = $('ram').value;
+  }
+  $('save').addEventListener('click', () => {updateSettings();$('saveNote').textContent='Demo configuration updated! Real hosting abhi connect nahi hai.';log('Demo config saved: '+$('sName').textContent+' | '+$('sEdition').textContent+' | '+$('sVersion').textContent+' | '+$('sRam').textContent+'.');});
+  document.querySelectorAll('.nav button').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b===btn));
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.toggle('hidden',sec.id!==btn.dataset.tab));
+    if(btn.dataset.tab==='settings') updateSettings();
+  }));
+  $('run').addEventListener('click', () => {const cmd=$('command').value.trim();if(!cmd)return;log('> '+cmd);log('Demo: command received; real Minecraft console connected nahi hai.');$('command').value='';});
+  $('command').addEventListener('keydown', e=>{if(e.key==='Enter')$('run').click();});
+  $('clear').addEventListener('click',()=>{logs.textContent='ASHRAFI HOSTING panel ready.\\nDemo mode: real server connected nahi hai.';});
+  // Save demo settings locally in this browser when possible.
+  try {
+    const saved = JSON.parse(localStorage.getItem('ashrafiHostingDemo') || 'null');
+    if (saved) {
+      $('serverName').value = saved.name || 'Ashrafi SMP';
+      $('version').value = saved.version || '1.21.11';
+      $('ram').value = saved.ram || '2 GB';
+      const editionRadio = document.querySelector('input[name="edition"][value="'+(saved.edition || 'Java')+'"]');
+      if (editionRadio) editionRadio.checked = true;
+    }
+  } catch(e) {}
+  $('save').addEventListener('click', () => {
+    try {
+      localStorage.setItem('ashrafiHostingDemo', JSON.stringify({
+        name: $('serverName').value.trim(),
+        edition: document.querySelector('input[name="edition"]:checked').value,
+        version: $('version').value,
+        ram: $('ram').value
+      }));
+      $('saveNote').textContent = 'Demo settings is browser mein save ho gayi hain. Real hosting abhi connect nahi hai.';
+    } catch(e) {
+      $('saveNote').textContent = 'Settings is browser mein save nahi ho sakin, lekin demo chal sakta hai.';
+    }
+  });
+  updateSettings();renderStatus();
+})();
+</script>
+</body>
+</html>
