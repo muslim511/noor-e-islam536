@@ -1,30 +1,49 @@
 name: Build Noor-e-Islam APK
 
 on:
-  workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/build-apk.yml'
-      - 'index.html'
+workflow_dispatch:
+push:
+paths:
+- 'index.html'
+- '.github/workflows/build-apk.yml'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+build:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+steps:
+  - name: Checkout project
+    uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '22'
 
-      - name: Build Android APK
-        run: |
-          echo "HTML app found:"
-          test -f index.html
-          echo "Project source is ready."
-          mkdir -p output
-          echo "A native Android wrapper must be added before an APK can be built."
+  - name: Setup Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '21'
+
+  - name: Create Capacitor Android project
+    run: |
+      mkdir www
+      cp index.html www/index.html
+      npm init -y
+      npm install @capacitor/core @capacitor/cli @capacitor/android
+      npx cap init "Noor-e-Islam" "com.nooreislam.app" --web-dir www
+      npx cap add android
+      npx cap sync android
+
+  - name: Build APK
+    run: |
+      cd android
+      chmod +x gradlew
+      ./gradlew assembleDebug
+
+  - name: Upload APK
+    uses: actions/upload-artifact@v4
+    with:
+      name: Noor-e-Islam-APK
+      path: android/app/build/outputs/apk/debug/app-debug.apk
