@@ -1,6 +1,6 @@
 name: Build Noor-e-Islam APK
 
-on:
+"on":
 workflow_dispatch:
 push:
 paths:
@@ -10,10 +10,9 @@ paths:
 jobs:
 build:
 runs-on: ubuntu-latest
-
 steps:
-  - name: Checkout project
-    uses: actions/checkout@v4
+- name: Checkout project
+uses: actions/checkout@v4
 
   - name: Setup Node.js
     uses: actions/setup-node@v4
@@ -26,7 +25,7 @@ steps:
       distribution: temurin
       java-version: '21'
 
-  - name: Create Capacitor Android project
+  - name: Build Android APK
     run: |
       mkdir www
       cp index.html www/index.html
@@ -35,9 +34,6 @@ steps:
       npx cap init "Noor-e-Islam" "com.nooreislam.app" --web-dir www
       npx cap add android
       npx cap sync android
-
-  - name: Build APK
-    run: |
       cd android
       chmod +x gradlew
       ./gradlew assembleDebug
