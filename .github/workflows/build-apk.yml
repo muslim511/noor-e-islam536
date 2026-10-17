@@ -5,16 +5,26 @@ on:
   push:
     paths:
       - '.github/workflows/build-apk.yml'
+      - 'index.html'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: Build APK
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build Android APK
         run: |
+          echo "HTML app found:"
+          test -f index.html
+          echo "Project source is ready."
           mkdir -p output
-          echo "HTML source is ready."
-          echo "A native Android wrapper is still required."
+          echo "A native Android wrapper must be added before an APK can be built."
