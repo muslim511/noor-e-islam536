@@ -1,0 +1,20 @@
+name: Build Noor-e-Islam APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build APK
+        run: |
+          mkdir -p output
+          echo "HTML source is ready."
+          echo "A native Android wrapper is still required."
